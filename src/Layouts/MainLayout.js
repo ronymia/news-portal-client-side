@@ -8,7 +8,7 @@ import RightSideNav from '../Pages/shared/RightSideNav/RightSideNav';
 
 const MainLayout = () => {
     return (
-        <div>
+        <>
             <Header />
             <Container>
                 <Row>
@@ -24,7 +24,7 @@ const MainLayout = () => {
                 </Row>
             </Container>
             <Footer />
-        </div>
+        </>
     )
 }
 
