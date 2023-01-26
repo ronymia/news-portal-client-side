@@ -8,7 +8,7 @@ import RightSideNav from '../RightSideNav/RightSideNav';
 
 const Header = () => {
     return (
-        <Navbar collapseOnSelect className='mb-4' expand="lg" bg="light" variant="light">
+        <Navbar collapseOnSelect className="mb-4 shadow-sm" expand="lg" bg="body" variant="light">
             <Container>
                 <Navbar.Brand><Link to='/'>News portal</Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
