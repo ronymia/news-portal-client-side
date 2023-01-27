@@ -42,6 +42,12 @@ const Header = () => {
                                                 className="text-black"
                                             >Login</Link>
                                         </Button>
+                                        <Button variant="outline-success"
+                                            className="ms-2">
+                                            <Link to='/register'
+                                                className="text-black"
+                                            >Register</Link>
+                                        </Button>
                                     </>
                             }
                         </div>
