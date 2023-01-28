@@ -6,6 +6,7 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login/Login";
 import Register from "../../Pages/Login/Register/Register";
 import News from "../../Pages/News/News/News";
+import RequreAuth from "../RequreAuth/RequreAuth";
 
 export const router = createBrowserRouter([
     {
@@ -20,12 +21,12 @@ export const router = createBrowserRouter([
             {
                 path: "/category/:id",
                 loader: ({ params }) => fetch(`http://localhost:5000/category/${params.id}`),
-                element: <Category />
+                element: <RequreAuth><Category /></RequreAuth>
             },
             {
                 path: "/news/:id",
                 loader: ({ params }) => fetch(`http://localhost:5000/news/${params.id}`),
-                element: <News />
+                element: <RequreAuth><News /></RequreAuth>
             },
             {
                 path: "/login",

@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const { signIn } = useContext(AuthContext);
+
     const [userInfo, setUserInfo] = useState({
         email: '',
         password: '',
@@ -18,6 +20,8 @@ const Login = () => {
         generalError: ''
     });
 
+
+    const from = location?.state?.from?.pathname || '/';
 
     const handleEmailInput = (event) => {
         const emailRegex = /^\S+@\S+\.\S+$/;
@@ -56,7 +60,7 @@ const Login = () => {
                     event.target.reset();
                     toast.success('Successfully Login');
                     setErrors({ emailError: '', passwordError: '', generalError: '' });
-                    navigate("/");
+                    navigate(from, { replace: true });
                 }
             })
             .catch(error => {
