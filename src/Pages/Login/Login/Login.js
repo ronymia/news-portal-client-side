@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-hot-toast';
@@ -53,10 +53,32 @@ const Login = () => {
                 if (user) {
                     event.target.reset();
                     toast.success('Successfully Login');
+                    setErrors({ emailError: '', passwordError: '', generalError: '' });
                 }
             })
-            .catch(error => { console.error(error.message) });
+            .catch(error => {
+                const errorCode = error.code;
+                console.log(errorCode)
+                if (errorCode) {
+                    switch (errorCode) {
+                        case 'auth/user-not-found':
+                            setErrors({ ...errors, generalError: 'User not founded' });
+                            break;
+                        case 'auth/invalid-email':
+                            setErrors({ ...errors, generalError: 'Invalid email provided, please provide a valid email' })
+                            break;
+
+                        case 'auth/wrong-password':
+                            setErrors({ ...errors, generalError: 'Wrong password' });
+                            break;
+
+                        default:
+                            setErrors({ ...errors, generalError: 'Something is wrong' });
+                    }
+                }
+            });
     }
+
 
 
     return (
@@ -71,6 +93,7 @@ const Login = () => {
                         name="email" type="email" placeholder="Enter email" />
                     <Form.Text className="text-danger">
                         {errors?.emailError && errors?.emailError}
+                        {errors?.generalError && errors?.generalError}
                     </Form.Text>
                 </Form.Group>
 
@@ -81,6 +104,7 @@ const Login = () => {
                         name="password" type="password" placeholder="Password" />
                     <Form.Text className="text-danger">
                         {errors?.passwordError && errors?.passwordError}
+                        {errors?.generalError && errors?.generalError}
                     </Form.Text>
                 </Form.Group>
                 <Button variant="primary" type="submit">
