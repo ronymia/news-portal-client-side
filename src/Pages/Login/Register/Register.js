@@ -79,7 +79,20 @@ const Register = () => {
                     navigate("/");
                 }
             })
-            .catch(error => { console.error(error.message) });
+            .catch(error => {
+                const errorCode = error.code;
+                console.log(errorCode)
+                if (errorCode) {
+                    switch (errorCode) {
+                        case 'auth/email-already-in-use':
+                            setErrors({ ...errors, generalError: 'user Already exist' })
+                            break;
+
+                        default:
+                            setErrors({ ...errors, generalError: 'Something is wrong' });
+                    }
+                }
+            });
 
         const handleUpdateUserProfile = (name, photoURL) => {
             const profile = {
@@ -89,7 +102,7 @@ const Register = () => {
 
             updateUserProfile(profile)
                 .then(() => { })
-                .catch(error => console.log(error));
+                .catch(error => { });
         }
     }
 
