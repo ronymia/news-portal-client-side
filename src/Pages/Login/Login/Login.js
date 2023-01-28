@@ -9,16 +9,39 @@ const Login = () => {
     const [userInfo, setUserInfo] = useState({
         email: '',
         password: '',
-        confirmPassword: ''
     });
-    const [error, setError] = useState({
+    const [errors, setErrors] = useState({
         emailError: '',
         passwordError: '',
         generalError: ''
     });
 
-    const handleInputBlur = (event) => {
-        setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
+
+    const handleEmailInput = (event) => {
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        const validEmail = emailRegex.test(event.target.value);
+
+        if (validEmail) {
+            setUserInfo({ ...userInfo, email: event.target.value });
+            setErrors({ ...errors, emailError: '' });
+        }
+        else {
+            setErrors({ ...errors, emailError: 'Please provide a valid email addess' });
+            setUserInfo({ ...userInfo, email: '' });
+        }
+    }
+
+    const handlePasswordInput = (event) => {
+        const passwordRegex = /.{6,}/;
+        const validPassword = passwordRegex.test(event.target.value);
+
+        if (validPassword) {
+            setUserInfo({ ...userInfo, password: event.target.value });
+            setErrors({ ...errors, passwordError: '' });
+        } else {
+            setErrors({ ...errors, passwordError: 'Password includes minimum 6 character' });
+            setUserInfo({ ...userInfo, email: '' });
+        }
     }
 
     const handleSubmit = (event) => {
@@ -34,6 +57,8 @@ const Login = () => {
             })
             .catch(error => { console.error(error.message) });
     }
+
+
     return (
         <section className="w-50 mx-auto">
             <h1>Login</h1>
@@ -41,15 +66,22 @@ const Login = () => {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
-                        onBlur={handleInputBlur}
+                        onBlur={handleEmailInput}
+                        defaultValue={userInfo.email}
                         name="email" type="email" placeholder="Enter email" />
+                    <Form.Text className="text-danger">
+                        {errors?.emailError && errors?.emailError}
+                    </Form.Text>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                        onBlur={handleInputBlur}
+                        onBlur={handlePasswordInput}
                         name="password" type="password" placeholder="Password" />
+                    <Form.Text className="text-danger">
+                        {errors?.passwordError && errors?.passwordError}
+                    </Form.Text>
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Login

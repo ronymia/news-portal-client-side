@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
     // components will unmount
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            console.log("inside auth state change", user);
+            console.log("inside auth state change", currentUser);
             setUser(currentUser);
             setLoading(false);
         })
