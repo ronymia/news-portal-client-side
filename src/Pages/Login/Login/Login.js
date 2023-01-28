@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
+    const navigate = useNavigate();
     const { signIn } = useContext(AuthContext);
     const [userInfo, setUserInfo] = useState({
         email: '',
@@ -40,7 +42,7 @@ const Login = () => {
             setErrors({ ...errors, passwordError: '' });
         } else {
             setErrors({ ...errors, passwordError: 'Password includes minimum 6 character' });
-            setUserInfo({ ...userInfo, email: '' });
+            setUserInfo({ ...userInfo, password: '' });
         }
     }
 
@@ -54,6 +56,7 @@ const Login = () => {
                     event.target.reset();
                     toast.success('Successfully Login');
                     setErrors({ emailError: '', passwordError: '', generalError: '' });
+                    navigate("/");
                 }
             })
             .catch(error => {

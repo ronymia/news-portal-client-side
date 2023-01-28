@@ -6,7 +6,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import LeftSideNav from '../LeftSideNav/LeftSideNav';
 import RightSideNav from '../RightSideNav/RightSideNav';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
-import { Button } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
+import { FaUserAlt } from 'react-icons/fa';
 
 const Header = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -28,7 +29,7 @@ const Header = () => {
                         <Nav.Link href="#pricing">Pricing</Nav.Link>
                     </Nav>
                     <Nav>
-                        <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex justify-content-between align-items-center gap-3">
                             {
                                 user?.uid ?
                                     <>
@@ -49,6 +50,16 @@ const Header = () => {
                                             >Register</Link>
                                         </Button>
                                     </>
+                            }
+                            {
+                                user?.photoURL ?
+                                    <Image
+                                        style={{ height: "40px" }}
+                                        roundedCircle
+                                        src={user?.photoURL}
+                                    />
+                                    :
+                                    <FaUserAlt />
                             }
                         </div>
                     </Nav>
